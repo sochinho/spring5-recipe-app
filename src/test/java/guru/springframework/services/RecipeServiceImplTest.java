@@ -13,12 +13,16 @@ import java.util.Set;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
+/**
+ * Created by jt on 6/17/17.
+ */
 public class RecipeServiceImplTest {
 
-    private RecipeServiceImpl recipeService;
+    RecipeServiceImpl recipeService;
 
     @Mock
-    private RecipeRepository recipeRepository;
+    RecipeRepository recipeRepository;
+
 
     @Before
     public void setUp() throws Exception {
@@ -28,18 +32,18 @@ public class RecipeServiceImplTest {
     }
 
     @Test
-    public void getRecipes() {
+    public void getRecipes() throws Exception {
 
         Recipe recipe = new Recipe();
         HashSet recipesData = new HashSet();
         recipesData.add(recipe);
 
-        when(recipeService.getRecipes()).thenReturn(recipesData);
+        when(recipeRepository.findAll()).thenReturn(recipesData);
 
         Set<Recipe> recipes = recipeService.getRecipes();
 
-        assertEquals(1, recipes.size());
-
-        verify(recipeRepository, times(3)).findAll();
+        assertEquals(recipes.size(), 1);
+        verify(recipeRepository, times(1)).findAll();
     }
+
 }
